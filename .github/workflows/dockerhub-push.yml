@@ -5,24 +5,46 @@ on:
     branches: ["main"]
 
 jobs:
-  build:
+  check-versions:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: node version
+        run: node --version
+
+      - name: Docker version
+        run: docker --version
+
+  checkout-code:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
         run: git clone https://github.com/${{ github.repository }} .
 
-      - name: node version
-        run: node --version
-
       - name: contents of current directory
         run: ls -a
 
-      - name: Docker version
-        run: docker --version
-
+  build-docker-image:
+    runs-on: ubuntu-latest
+    steps:
       - name: Build Docker Image
         run: docker build -t travel-list .
 
       - name: Docker image show
         run: docker images
+
+  login-to-dockerhub:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Docker image show
+        run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+
+  push-docker-image:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Tag Docker Image
+        run: docker tag travel-list ${{ secrets.DOCKER_USERNAME }}/travel-list:${{ github.sha }}
+
+      - name: Push Docker Image
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/travel-list:${{ github.sha }}
