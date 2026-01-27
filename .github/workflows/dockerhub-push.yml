@@ -13,4 +13,4 @@ jobs:
         run: git clone https://github.com/${{ github.repository }} .
 
       - name: Print message
-        run: pwd
+        run: node --version
