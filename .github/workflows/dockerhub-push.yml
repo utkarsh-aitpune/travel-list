@@ -19,20 +19,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout code and build docker image
         run: git clone https://github.com/${{ github.repository }} .
 
-      - name: contents of current directory
-        run: ls -a
-
-  build-docker-image:
-    runs-on: ubuntu-latest
-    steps:
-      - name: pwd
-        run: ls -a
       - name: Build Docker Image
         run: docker build -t travel-list .
 
+  show-docker-image:
+    runs-on: ubuntu-latest
+    steps:
       - name: Docker image show
         run: docker images
 
