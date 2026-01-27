@@ -23,6 +23,7 @@ function Form() {
   const [quantity, setQuantity] = useState(5);
   function handleSubmit(e) {
     e.preventDefault();
+    console.log(e.target);
     if (!description) return;
     const newItem = { description, quantity, packed: false, id: Date.now() };
 
