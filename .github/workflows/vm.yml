@@ -30,14 +30,13 @@ jobs:
               --name linux \
               --command-id RunShellScript \
               --scripts "
-                # Log in to ACR using the VM's Managed Identity
+                # 1. Log the VM's CLI into its Managed Identity
+                # If you have multiple identities, use: az login --identity --username <client_id_of_identity>
+                sudo az login --identity --username e845c287-0b86-4efd-a536-d0158d148226
+
+                # 2. Now log into ACR
                 sudo az acr login --name myacr102002
-                
-                # Pull the updated image
+
+                # 3. Pull the image
                 sudo docker pull myacr102002.azurecr.io/travel-list:latest
-                
-                # Optional: Restart the container to use the new image
-                # sudo docker stop travel-app || true
-                # sudo docker rm travel-app || true
-                # sudo docker run -d --name travel-app -p 80:80 myacr102002.azurecr.io/travel-list:latest
               "
