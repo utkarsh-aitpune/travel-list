@@ -32,7 +32,7 @@ jobs:
               --scripts "
                 # 1. Log the VM's CLI into its Managed Identity
                 # If you have multiple identities, use: az login --identity --username <client_id_of_identity>
-                sudo az login --identity --username e845c287-0b86-4efd-a536-d0158d148226
+                sudo az login --identity --client-id e845c287-0b86-4efd-a536-d0158d148226
 
                 # 2. Now log into ACR
                 sudo az acr login --name myacr102002
